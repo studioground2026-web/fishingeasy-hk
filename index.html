@@ -1,0 +1,283 @@
+﻿<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>釣魚易 FishingEasy</title>
+
+    <meta name="theme-color" content="#2563EB">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: { primary: '#2563EB', danger: '#E11D48', success: '#10B981' }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { padding-bottom: env(safe-area-inset-bottom); }
+        #admob-banner-slot {
+            padding-top: env(safe-area-inset-top);
+            height: calc(env(safe-area-inset-top) + 50px);
+        }
+        #view-map, #map { height: 100%; width: 100%; position: absolute; top: 0; left: 0; z-index: 1; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        input[type="checkbox"] { accent-color: #2563EB; width: 1.2rem; height: 1.2rem; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100 h-screen flex flex-col overflow-hidden select-none">
+    <div id="admob-banner-slot" class="w-full bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex items-end justify-center z-[1200]">
+        <div id="admob-banner" class="w-full max-w-[420px] h-[50px] flex items-center justify-center text-[11px] tracking-wide text-gray-400 dark:text-gray-500">
+            AdMob Banner (320x50 / 320x100)
+        </div>
+    </div>
+
+    <div id="disclaimer-modal" class="fixed inset-0 z-[2000] bg-black/90 flex items-center justify-center p-6 hidden">
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl max-w-sm w-full shadow-2xl">
+            <h2 class="text-2xl font-bold text-primary mb-4 text-center">免責聲明 Disclaimer</h2>
+            <div class="h-40 overflow-y-auto bg-gray-100 dark:bg-gray-700 p-3 rounded mb-4 text-sm leading-relaxed">
+                <p>本應用程式之地圖界線及魚類資訊僅供參考。實際垂釣範圍及法規，請務必以現場水務署告示牌及官方最新公布為準。</p>
+                <br>
+                <p>使用者須自行承擔進入水塘範圍之風險。開發者不對任何違規檢控或意外負責。</p>
+            </div>
+            <button onclick="acceptDisclaimer()" class="w-full bg-primary hover:bg-blue-600 text-white font-bold py-3 rounded-xl transition">
+                我明白並同意 (I Agree)
+            </button>
+        </div>
+    </div>
+
+    <main class="flex-1 relative w-full h-full overflow-hidden">
+        <div id="view-map" class="view-section w-full h-full">
+            <div id="map"></div>
+
+            <div id="map-status" class="absolute top-4 left-1/2 transform -translate-x-1/2 bg-white/90 dark:bg-gray-800/90 backdrop-blur px-4 py-2 rounded-full shadow-lg z-[1000] text-sm font-bold flex items-center gap-2 border border-gray-200 dark:border-gray-700">
+                <span class="w-2 h-2 rounded-full bg-gray-400" id="status-dot"></span>
+                <span id="status-text" data-i18n="locate_me">定位中...</span>
+            </div>
+
+            <button onclick="locateUser()" class="absolute bottom-6 right-4 bg-white dark:bg-gray-800 p-3 rounded-full shadow-lg z-[1000] text-primary hover:bg-gray-100">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 8l4 4-4 4M8 12h8"></path></svg>
+            </button>
+        </div>
+
+        <div id="view-dex" class="view-section h-full w-full absolute inset-0 bg-gray-50 dark:bg-gray-900 overflow-y-auto p-4 hidden z-[10]">
+            <div id="fish-list" class="space-y-4 pb-20"></div>
+        </div>
+
+        <div id="view-log" class="view-section h-full w-full absolute inset-0 bg-gray-50 dark:bg-gray-900 overflow-y-auto p-4 hidden z-[10]">
+            <h2 class="text-2xl font-bold mb-4">
+                <span data-lang="zh">捕魚日誌</span>
+                <span data-lang="en" class="hidden">Fishing Log</span>
+            </h2>
+            <div id="log-empty" class="bg-white dark:bg-gray-800 rounded-xl p-8 text-center text-gray-500 dark:text-gray-300 border border-gray-100 dark:border-gray-700">
+                <div class="text-4xl mb-3">🎣</div>
+                <p data-i18n="log_empty">未有漁獲日誌，按 + 新增第一筆。</p>
+            </div>
+            <div id="log-list" class="space-y-3 pb-24"></div>
+
+            <button id="log-fab" onclick="toggleLogQuickMenu()" class="fixed bottom-24 right-5 z-[300] w-14 h-14 rounded-full bg-primary hover:bg-blue-700 text-white text-3xl leading-none shadow-lg flex items-center justify-center" aria-label="Add log">+</button>
+
+            <div id="log-quick-menu" class="fixed bottom-26 right-20 z-[305] hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg p-2 w-36">
+                <button type="button" onclick="startAddLog('camera')" class="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-sm">拍照</button>
+                <button type="button" onclick="startAddLog('upload')" class="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-sm">上傳</button>
+            </div>
+
+            <div id="log-modal" class="fixed inset-0 z-[400] bg-black/50 p-4 hidden">
+                <div class="max-w-md mx-auto mt-10 bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-2xl border border-gray-100 dark:border-gray-700">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-bold" data-i18n="log_add">新增漁獲</h3>
+                        <button onclick="closeLogModal()" class="text-gray-500 hover:text-gray-800 dark:hover:text-gray-200 text-xl leading-none" aria-label="Close">&times;</button>
+                    </div>
+
+                    <form onsubmit="saveLog(event)" class="space-y-4">
+                        <label for="log-photo-input" class="block cursor-pointer border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-3 text-center bg-gray-50 dark:bg-gray-700/40">
+                            <img id="log-photo-preview" alt="preview" class="hidden w-full h-44 object-cover rounded-lg mb-2">
+                            <span class="text-sm text-gray-500 dark:text-gray-300">Photo</span>
+                        </label>
+                        <input id="log-photo-input" type="file" accept="image/*" capture="environment" onchange="handleLogPhotoChange(event)" class="hidden" required>
+
+                        <input id="log-species" type="text" data-i18n-placeholder="log_species_placeholder" placeholder="魚種名稱" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-2" required>
+
+                        <input id="log-length" type="number" min="0" step="0.1" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-2" placeholder="Length (cm)" required>
+
+                        <input id="log-weight" type="number" min="0" step="0.1" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-2" placeholder="Weight (kg)" required>
+
+                        <input id="log-location" type="text" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-2" placeholder="拍攝地點 / Location">
+
+                        <input id="log-date" type="date" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-3 py-2" required>
+
+                        <div class="flex gap-2">
+                            <button type="button" onclick="closeLogModal()" class="flex-1 rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-2">Cancel</button>
+                            <button type="submit" class="flex-1 rounded-lg bg-primary hover:bg-blue-700 text-white px-4 py-2 font-bold" data-i18n="log_save">儲存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="log-detail-modal" class="fixed inset-0 z-[410] bg-black/60 p-4 hidden">
+                <div class="max-w-md mx-auto mt-8 bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-2xl border border-gray-100 dark:border-gray-700">
+                    <img id="log-detail-image" alt="detail" class="w-full h-64 object-cover bg-gray-100 dark:bg-gray-700">
+                    <div class="p-4 space-y-2">
+                        <p id="log-detail-species" class="text-xl font-bold"></p>
+                        <p id="log-detail-metrics" class="text-sm text-gray-700 dark:text-gray-200"></p>
+                        <p id="log-detail-date" class="text-xs text-gray-500"></p>
+                        <div class="flex gap-2 pt-2">
+                            <button id="log-share-btn" type="button" class="flex-1 rounded-lg bg-primary hover:bg-blue-700 text-white px-4 py-2 font-bold" data-i18n="share_btn">分享戰利品</button>
+                            <button type="button" onclick="closeLogDetailModal()" class="flex-1 rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-2">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <canvas id="share-canvas" width="1080" height="1350" class="hidden"></canvas>
+        </div>
+
+        <div id="view-rules" class="view-section h-full w-full absolute inset-0 bg-gray-50 dark:bg-gray-900 overflow-y-auto p-4 hidden z-[10]">
+            <h2 class="text-2xl font-bold mb-6">
+                <span data-lang="zh">牌照規則</span>
+                <span data-lang="en" class="hidden">Licence & Rules</span>
+            </h2>
+            <div class="bg-gradient-to-r from-blue-600 to-blue-500 rounded-2xl p-6 text-white shadow-lg mb-4 relative overflow-hidden">
+                <div class="relative z-10">
+                    <p class="text-blue-100 text-sm mb-1" data-i18n="license_start">牌照生效日期</p>
+                    <input type="date" id="license-date" class="bg-white/20 text-white border-none rounded px-2 py-1 mb-4 w-full backdrop-blur-sm focus:outline-none" onchange="updateLicense()">
+                    <div class="flex items-baseline gap-2">
+                        <span id="days-left" class="text-4xl font-mono font-bold">---</span>
+                        <span class="text-sm" data-i18n="days_left">天剩餘</span>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-700 mb-4">
+                <a data-lang="zh" href="https://www.wsd.gov.hk/tc/customer-services/other-customer-services/fishing-in-reservoirs/application-for-fishing-licence/index.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-full bg-primary hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition">申請釣魚牌照</a>
+                <a data-lang="en" href="https://www.wsd.gov.hk/en/customer-services/other-customer-services/fishing-in-reservoirs/application-for-fishing-licence/index.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-full bg-primary hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition hidden">Apply for Fishing Licence</a>
+            </div>
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-700 mb-4">
+                <h3 class="font-bold mb-4 text-gray-500 text-sm uppercase tracking-wide" data-i18n="checklist_title">出發前安全檢查</h3>
+                <div class="space-y-4" id="rules-checklist-container"></div>
+            </div>
+            <section data-lang="zh" class="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-700 mb-4">
+                <h3 class="text-lg font-bold mb-3">持牌釣魚人士須注意及遵守釣魚牌照的規則</h3>
+                <ul class="list-disc pl-5 space-y-3 text-sm leading-relaxed text-gray-700 dark:text-gray-200">
+                    <li>持牌人可進入及逗留在水塘區，但遇有任何危險，概由持牌人負責。持牌人必須接受水塘區土地或其上一切事物當時的情況，而且無論在何種情形下，亦不得因土地或其上事物可能引致的財物損失或人身傷亡而向水務監督提出任何賠償要求。</li>
+                    <li>釣魚牌照只限使用一枝釣竿及釣絲，且不得轉讓。</li>
+                    <li>遇有警務人員或獲授權人員查閱時，必須出示釣魚牌照。</li>
+                    <li>年齡在十三歲以下人士不獲發釣魚牌照。</li>
+                    <li>嚴禁使用魚網或其他用具（釣竿及釣絲除外）或爆炸品或有毒物質捕捉或殘害魚類。</li>
+                    <li>禁用小船，小艇，木筏等捕魚。</li>
+                    <li>除了獲豁免魚類外，釣獲以下長度的魚類均須生放回水塘內：360 毫米以下的鱸魚、300 毫米以下的生魚及其他 180 毫米以下的各種魚類，而長度是由魚頭最前端起計至魚尾最末端止。</li>
+                    <li>除了獲豁免魚類外，每名釣魚人士一天中的魚獲，不得多於長度 360 毫米或以上的鱸魚兩尾、300 毫米或以上的生魚兩尾，以及其他 180 毫米以上每種魚類兩尾。</li>
+                    <li>當局日後可撤銷釣魚牌照，並按不同條款另發牌照。</li>
+                    <li>請小心保存釣魚牌照，如有遺失或損壞，概不補發。</li>
+                </ul>
+            </section>
+
+            <section data-lang="zh" class="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-700 mb-4">
+                <h3 class="text-lg font-bold mb-3">此外，釣魚人士亦須留意：</h3>
+                <ul class="list-disc pl-5 space-y-3 text-sm leading-relaxed text-gray-700 dark:text-gray-200">
+                    <li>釣魚人士在水塘或灌溉水塘釣魚時，不可使用鉛墜，以免魚類、雀鳥或市民中鉛毒。</li>
+                    <li>未經水務監督的允許，不可把任何動物，包括爬蟲或魚類在水塘或灌溉水塘放生。</li>
+                    <li>不要在水塘範圍內拋棄垃圾或污染水塘。</li>
+                </ul>
+            </section>
+
+            <section data-lang="en" class="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-700 mb-4">
+                <h3 class="text-lg font-bold mb-3">Licensed anglers are required to observe and comply with the prescribed conditions of fishing licence:</h3>
+                <ul class="list-disc pl-5 space-y-3 text-sm leading-relaxed text-gray-700 dark:text-gray-200">
+                    <li>The licence holder is allowed to enter and remain in the reservoir area on the understanding that he/she does so entirely at his/her own risk. He/She must take the land with everything thereon as he/she finds it and shall not have or make any claim for damage to or loss of property, personal injury or death against the Water Authority howsoever such damage to or loss of property, personal injury or death may be occasioned.</li>
+                    <li>The licence is for the use of one rod and line only, and is not transferable.</li>
+                    <li>The licence must be produced on demand by a police officer or other authorized officer.</li>
+                    <li>Licences will not be issued to any person under the age of 13.</li>
+                    <li>The use of nets or other appliances (apart from rod and line) or the use of explosive or toxic substances to catch or destroy fish is strictly prohibited.</li>
+                    <li>The use of boats, dinghies, rafts etc. for fishing is prohibited.</li>
+                    <li>Except the exempted fish, all Black Bass under 360 mm, all Snakehead under 300 mm and all other fish species under 180 mm in length measured from the most forward point of the head to the farthest tip of the tail shall be immediately returned alive to the water.</li>
+                    <li>Except the exempted fish, not more than two Black Bass 360 mm or over and two Snakehead 300 mm or over and two numbers of each species 180 mm or over in length for any other fish species shall be retained by any one angler in one day.</li>
+                    <li>The licence may later be revoked and replaced by another on different terms.</li>
+                    <li>Please keep the licence intact. No copy will be issued on any loss or damage.</li>
+                </ul>
+            </section>
+
+            <section data-lang="en" class="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-700 mb-4 pb-20">
+                <h3 class="text-lg font-bold mb-3">Apart from the above, anglers are also reminded that:</h3>
+                <ul class="list-disc pl-5 space-y-3 text-sm leading-relaxed text-gray-700 dark:text-gray-200">
+                    <li>To protect fish, birds and people from lead poisoning, anglers are prohibited to use lead fishing sinkers.</li>
+                    <li>The release of any animals, including fish and reptiles, into reservoirs without the prior permission of the Water Authority is prohibited.</li>
+                    <li>Do not litter or pollute the reservoirs.</li>
+                </ul>
+            </section>
+        </div>
+
+        <div id="view-set" class="view-section h-full w-full absolute inset-0 bg-gray-50 dark:bg-gray-900 overflow-y-auto p-4 hidden z-[10]">
+            <h2 class="text-2xl font-bold mb-6" data-i18n="tab_set">設定</h2>
+
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden divide-y divide-gray-100 dark:divide-gray-700">
+                <div class="p-4 flex justify-between items-center">
+                    <span data-i18n="settings_lang">語言</span>
+                    <div class="flex bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+                        <button onclick="setLang('zh')" id="btn-zh" class="px-3 py-1 rounded text-sm font-bold transition">中文</button>
+                        <button onclick="setLang('en')" id="btn-en" class="px-3 py-1 rounded text-sm font-bold transition">EN</button>
+                    </div>
+                </div>
+                <div class="p-4 flex justify-between items-center">
+                    <span data-i18n="settings_dark">深色模式</span>
+                    <button id="btn-dark" onclick="toggleDark()" class="w-12 h-6 bg-gray-300 rounded-full relative transition duration-300">
+                        <div class="w-4 h-4 bg-white rounded-full absolute top-1 left-1 transition duration-300 shadow-sm"></div>
+                    </button>
+                </div>
+                <button onclick="resetApp()" class="w-full p-4 text-left text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition">
+                    <span data-i18n="settings_reset">重設所有設定</span>
+                </button>
+            </div>
+
+            <div class="mt-4 bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-700">
+                <h3 class="text-base font-bold mb-2">私隱條款 Privacy Policy</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400"></p>
+            </div>
+
+            <div class="mt-4 bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-700">
+                <h3 class="text-base font-bold mb-2">關於開發者 About Developer</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400"></p>
+            </div>
+
+            <div class="mt-8 text-center text-xs text-gray-400">
+                v2.0.1 • Offline Capable<br>Data Source: WSD Hong Kong
+            </div>
+        </div>
+    </main>
+
+    <nav class="h-16 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 flex justify-around items-center z-[100] pb-safe shadow-[0_-5px_10px_rgba(0,0,0,0.02)]">
+        <button onclick="switchTab('map')" class="nav-btn active flex flex-col items-center gap-1 w-full text-gray-400 hover:text-primary transition" id="nav-map">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path><path d="M2 12h20"></path></svg>
+            <span class="text-[10px] font-bold" data-i18n="tab_map">地圖</span>
+        </button>
+        <button onclick="switchTab('dex')" class="nav-btn flex flex-col items-center gap-1 w-full text-gray-400 hover:text-primary transition" id="nav-dex">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 1-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+            <span class="text-[10px] font-bold" data-i18n="tab_dex">漁獲限制</span>
+        </button>
+        <button onclick="switchTab('log')" class="nav-btn flex flex-col items-center gap-1 w-full text-gray-400 hover:text-primary transition" id="nav-log">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+            <span class="text-[10px] font-bold">日誌</span>
+        </button>
+        <button onclick="switchTab('rules')" class="nav-btn flex flex-col items-center gap-1 w-full text-gray-400 hover:text-primary transition" id="nav-rules">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+            <span class="text-[10px] font-bold">牌照規則</span>
+        </button>
+        <button onclick="switchTab('set')" class="nav-btn flex flex-col items-center gap-1 w-full text-gray-400 hover:text-primary transition" id="nav-set">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            <span class="text-[10px] font-bold" data-i18n="tab_set">設定</span>
+        </button>
+    </nav>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="./app.js"></script>
+</body>
+</html>
+
