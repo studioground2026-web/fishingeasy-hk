@@ -1,4 +1,4 @@
-﻿/* app.js */
+/* app.js */
 
 const I18N = {
     zh: {
@@ -98,17 +98,18 @@ const RESERVOIRS = [
 ];
 
 const EXEMPT_FISH = [
-    { zh: "紅螯螯蝦", en: "Red Swamp Crayfish", sci: "Procambarus clarkii", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/red-swamp-crayfish.jpg" },
-    { zh: "福壽魚", en: "Tilapia", sci: "Oreochromis spp.", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/tilapia.jpg" },
-    { zh: "棘甲鯰（清道夫）", en: "Armoured Catfishes", sci: "Loricariidae", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/armoured-catfishes.jpg" },
-    { zh: "普通清道夫", en: "Common Pleco", sci: "Hypostomus plecostomus", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/common-pleco.jpg" },
-    { zh: "豹紋翼甲鯰", en: "Sailfin Catfish", sci: "Pterygoplichthys pardalis", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/sailfin-catfish.jpg" },
-    { zh: "下口鯰", en: "Suckermouth Catfish", sci: "Pterygoplichthys disjunctivus", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/suckermouth-catfish.jpg" },
-    { zh: "錦鯉下口鯰", en: "Suckermouth Catfish", sci: "Pterygoplichthys multiradiatus", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/suckermouth-catfish2.jpg" },
-    { zh: "地圖魚", en: "Oscar", sci: "Astronotus ocellatus", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/oscar.jpg" },
-    { zh: "橙化慈鯛", en: "Midas cichlid", sci: "Amphilophus citrinellus", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/midas-cichlid.jpg" },
-    { zh: "美洲虎慈鯛", en: "Jaguar guapote", sci: "Parachromis managuensis", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/jaguar-guapote.jpg" },
-    { zh: "德州慈鯛", en: "Texas cichlid", sci: "Herichthys cyanoguttatus", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/texas-cichlid.jpg" }
+    { zh: "大口黑鱸", en: "Largemouth Black Bass", sci: "Micropterus salmoides", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/red-swamp-crayfish.jpg" },
+    { zh: "金筆", en: "Indonesian Snakehead", sci: "Channa micropeltes", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/tilapia.jpg" },
+    { zh: "齊氏非鯽", en: "Redbelly Tilapia", sci: "Coptodon sp.", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/armoured-catfishes.jpg" },
+    { zh: "星點伴麗魚", en: "Jewelfish", sci: "Hemichromis sp.", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/common-pleco.jpg" },
+    { zh: "縱帶黑麗魚", en: "Malawi Golden Cichlid", sci: "Melanochromis sp.", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/sailfin-catfish.jpg" },
+    { zh: "莫桑比克口孵非鯽", en: "Mozambique Tilapia", sci: "Oreochromis sp.", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/suckermouth-catfish.jpg" },
+    { zh: "尼羅口孵非鯽", en: "Nile Tilapia", sci: "Oreochromis sp.", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/suckermouth-catfish2.jpg" },
+    { zh: "網紋獅頭（鵝頭）", en: "Redhead Cichlid", sci: "Vieja sp.", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/oscar.jpg" },
+    { zh: "九間", en: "Zebra Tilapia", sci: "Heterotilapia sp.", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/midas-cichlid.jpg" },
+    { zh: "珍珠石斑", en: "Jaguar Guapote", sci: "Parachromis sp.", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/jaguar-guapote.jpg" },
+    { zh: "筍殼", en: "Marble Goby", sci: "Oxyeleotris marmorata", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/texas-cichlid.jpg" },
+    { zh: "琵琶魚", en: "Suckermouth Catfishes", sci: "Pterygoplichthys sp.", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/texas-cichlid.jpg" }
 ];
 
 let state = {
@@ -153,6 +154,18 @@ function switchTab(tabId) {
     document.getElementById(`nav-${tabId}`).classList.add("text-primary", "active");
 
     if (tabId === "map" && map) setTimeout(() => map.invalidateSize(), 100);
+}
+
+function openSubpage(pageId) {
+    document.querySelectorAll(".view-section").forEach((el) => {
+        el.classList.add("hidden");
+        if (el.id === "view-dex") el.classList.remove("flex");
+    });
+    const view = document.getElementById(`view-${pageId}`);
+    if (view) view.classList.remove("hidden");
+    document.querySelectorAll(".nav-btn").forEach((el) => el.classList.remove("text-primary", "active"));
+    const navSet = document.getElementById("nav-set");
+    if (navSet) navSet.classList.add("text-primary", "active");
 }
 
 function initMap() {
@@ -209,7 +222,15 @@ function locateUser() {
     statusDot.className = "w-2 h-2 rounded-full bg-yellow-400 animate-ping";
     if (!map) initMap();
     if (!map) return;
-    map.locate({ setView: true, maxZoom: 14 });
+    map.once("locationerror", () => {
+        // Keep app usable in preview mode (e.g., non-HTTPS or denied location).
+        checkProximity(map.getCenter());
+    });
+    try {
+        map.locate({ setView: true, maxZoom: 14 });
+    } catch {
+        checkProximity(map.getCenter());
+    }
     map.once("locationfound", (e) => {
         if (userMarker) map.removeLayer(userMarker);
         userMarker = L.circleMarker(e.latlng, { radius: 8, color: "white", fillColor: "#2563EB", fillOpacity: 1 }).addTo(map);
@@ -298,10 +319,31 @@ function escapeHtml(str) {
         .replaceAll("'", "&#39;");
 }
 
+function formatDateYMD(timestamp) {
+    if (!timestamp) return "";
+    const asText = String(timestamp);
+    if (/^\d{4}-\d{2}-\d{2}/.test(asText)) return asText.slice(0, 10);
+    const d = new Date(timestamp);
+    if (Number.isNaN(d.getTime())) return "";
+    return d.toISOString().slice(0, 10);
+}
+
+function parseLatLng(text) {
+    if (!text) return null;
+    const match = String(text).trim().match(/(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)/);
+    if (!match) return null;
+    const lat = Number(match[1]);
+    const lng = Number(match[2]);
+    if (!Number.isFinite(lat) || !Number.isFinite(lng)) return null;
+    if (lat < -90 || lat > 90 || lng < -180 || lng > 180) return null;
+    return { lat, lng };
+}
+
 function renderLogs() {
     const listEl = document.getElementById("log-list");
     const emptyEl = document.getElementById("log-empty");
     if (!listEl || !emptyEl) return;
+    const delLabel = state.lang === "zh" ? "刪除" : "Delete";
 
     const logs = getLogs().sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
     if (!logs.length) {
@@ -312,7 +354,7 @@ function renderLogs() {
 
     emptyEl.classList.add("hidden");
     listEl.innerHTML = logs.map((log) => {
-        const dateText = new Date(log.timestamp).toLocaleDateString(state.lang === "zh" ? "zh-HK" : "en-US");
+        const dateText = formatDateYMD(log.timestamp);
         return `
         <article onclick="openLogDetailModal('${log.id}')" class="bg-white dark:bg-gray-800 rounded-xl p-3 shadow-sm border border-gray-100 dark:border-gray-700 flex items-center gap-3 cursor-pointer">
             <img src="${log.imageBase64}" alt="catch photo" class="w-16 h-16 rounded-lg object-cover bg-gray-100 dark:bg-gray-700 shrink-0">
@@ -322,22 +364,11 @@ function renderLogs() {
             </div>
             <div class="text-right shrink-0">
                 <p class="text-xs text-gray-500 mb-2">${dateText}</p>
-                <button onclick="event.stopPropagation(); deleteLog('${log.id}')" class="text-xs px-2 py-1 rounded border border-red-300 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30">Delete</button>
+                <button onclick="event.stopPropagation(); deleteLog('${log.id}')" class="text-xs px-2 py-1 rounded border border-red-300 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30">${delLabel}</button>
             </div>
         </article>
         `;
     }).join("");
-}
-
-function toggleLogQuickMenu() {
-    const menu = document.getElementById("log-quick-menu");
-    if (!menu) return;
-    menu.classList.toggle("hidden");
-}
-
-function closeLogQuickMenu() {
-    const menu = document.getElementById("log-quick-menu");
-    if (menu) menu.classList.add("hidden");
 }
 
 function startAddLog(source) {
@@ -347,7 +378,6 @@ function startAddLog(source) {
     if (source === "camera") input.setAttribute("capture", "environment");
     else input.removeAttribute("capture");
     input.value = "";
-    closeLogQuickMenu();
     input.click();
 }
 
@@ -362,7 +392,6 @@ function openLogModal() {
 function closeLogModal() {
     const modal = document.getElementById("log-modal");
     if (modal) modal.classList.add("hidden");
-    closeLogQuickMenu();
     const form = document.querySelector("#log-modal form");
     if (form) form.reset();
     const preview = document.getElementById("log-photo-preview");
@@ -564,13 +593,25 @@ function openLogDetailModal(id) {
     const species = document.getElementById("log-detail-species");
     const metrics = document.getElementById("log-detail-metrics");
     const date = document.getElementById("log-detail-date");
+    const location = document.getElementById("log-detail-location");
+    const mapWrap = document.getElementById("log-detail-map-wrap");
+    const mapFrame = document.getElementById("log-detail-map");
     const shareBtn = document.getElementById("log-share-btn");
-    if (!modal || !image || !species || !metrics || !date || !shareBtn) return;
+    if (!modal || !image || !species || !metrics || !date || !location || !mapWrap || !mapFrame || !shareBtn) return;
 
     image.src = log.imageBase64;
     species.innerText = log.species || "-";
     metrics.innerText = `${Number(log.length)} cm · ${Number(log.weight || 0)} kg`;
-    date.innerText = new Date(log.timestamp).toLocaleDateString(state.lang === "zh" ? "zh-HK" : "en-US");
+    date.innerText = formatDateYMD(log.timestamp);
+    location.innerText = log.locationName ? log.locationName : "";
+    const coords = parseLatLng(log.locationName);
+    if (coords) {
+        mapFrame.src = `https://www.openstreetmap.org/export/embed.html?bbox=${coords.lng - 0.01}%2C${coords.lat - 0.01}%2C${coords.lng + 0.01}%2C${coords.lat + 0.01}&layer=mapnik&marker=${coords.lat}%2C${coords.lng}`;
+        mapWrap.classList.remove("hidden");
+    } else {
+        mapFrame.removeAttribute("src");
+        mapWrap.classList.add("hidden");
+    }
     shareBtn.onclick = () => generateShareImage(id);
     modal.classList.remove("hidden");
 }
@@ -618,7 +659,6 @@ async function generateShareImage(logId) {
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, cw, ch);
 
-    const dateText = new Date(log.timestamp).toLocaleDateString(state.lang === "zh" ? "zh-HK" : "en-US");
     ctx.fillStyle = "#FFFFFF";
     ctx.textAlign = "left";
     ctx.font = "bold 48px sans-serif";
@@ -626,7 +666,7 @@ async function generateShareImage(logId) {
     ctx.font = "bold 48px sans-serif";
     ctx.fillText(`${Number(log.length)} cm · ${Number(log.weight || 0)} kg`, 56, ch - 118);
     ctx.font = "500 38px sans-serif";
-    ctx.fillText(dateText, 56, ch - 58);
+    ctx.fillText(formatDateYMD(log.timestamp), 56, ch - 58);
 
     ctx.textAlign = "right";
     ctx.font = "bold 32px sans-serif";
@@ -635,9 +675,12 @@ async function generateShareImage(logId) {
     const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.92));
     if (!blob) return;
     const file = new File([blob], `fishingeasy_trophy_${Date.now()}.jpg`, { type: "image/jpeg" });
+    const shareText = state.lang === "zh"
+        ? `漁獲日誌：${log.species || "-"} (${Number(log.length)}cm)。 #釣魚易`
+        : `Catch Log: ${log.species || "-"} (${Number(log.length)}cm). #FishingEasyHK`;
 
     if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-        await navigator.share({ files: [file], title: "FishingEasyHK Share" });
+        await navigator.share({ files: [file], title: "FishingEasyHK Share", text: shareText });
         alert(t.share_success);
         return;
     }
