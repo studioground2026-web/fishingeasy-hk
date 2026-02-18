@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-HK">
 <head>
     <meta charset="UTF-8">
@@ -45,12 +45,16 @@
         <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl max-w-sm w-full shadow-2xl">
             <h2 class="text-2xl font-bold text-primary mb-4 text-center">免責聲明 Disclaimer</h2>
             <div class="h-40 overflow-y-auto bg-gray-100 dark:bg-gray-700 p-3 rounded mb-4 text-sm leading-relaxed">
-                <p>本應用程式之地圖界線及魚類資訊僅供參考。實際垂釣範圍及法規，請務必以現場水務署告示牌及官方最新公布為準。</p>
+                <p>本應用程式之地圖及魚類資訊僅供參考。實際垂釣範圍及法規，請務必以現場水務署告示牌及官方最新公布為準。</p>
                 <br>
                 <p>使用者須自行承擔進入水塘範圍之風險。開發者不對任何違規檢控或意外負責。</p>
+                <br>
+                <p>The map and fish information in this application are for reference only. For the actual fishing boundaries and regulations, please always refer to the on-site Water Supplies Department notice boards and the latest official announcements.</p>
+                <br>
+                <p>Users enter reservoir areas at their own risk. The developer assumes no responsibility for any regulatory violations, prosecutions, or accidents.</p>
             </div>
             <button onclick="acceptDisclaimer()" class="w-full bg-primary hover:bg-blue-600 text-white font-bold py-3 rounded-xl transition">
-                我明白並同意 (I Agree)
+                我明白並同意 I Agree
             </button>
         </div>
     </div>
@@ -84,15 +88,10 @@
             </div>
             <div id="log-list" class="space-y-3 pb-24"></div>
 
-            <button id="log-fab" onclick="toggleLogQuickMenu()" class="fixed bottom-24 right-5 z-[300] w-14 h-14 rounded-full bg-primary hover:bg-blue-700 text-white text-3xl leading-none shadow-lg flex items-center justify-center" aria-label="Add log">+</button>
-
-            <div id="log-quick-menu" class="fixed bottom-26 right-20 z-[305] hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg p-2 w-36">
-                <button type="button" onclick="startAddLog('camera')" class="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-sm">拍照</button>
-                <button type="button" onclick="startAddLog('upload')" class="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-sm">上傳</button>
-            </div>
+            <button id="log-fab" onclick="startAddLog('upload')" class="fixed bottom-24 right-5 z-[300] w-14 h-14 rounded-full bg-primary hover:bg-blue-700 text-white text-3xl leading-none shadow-lg flex items-center justify-center" aria-label="Add log">+</button>
 
             <div id="log-modal" class="fixed inset-0 z-[400] bg-black/50 p-4 hidden">
-                <div class="max-w-md mx-auto mt-10 bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-2xl border border-gray-100 dark:border-gray-700">
+                <div class="max-w-md w-[calc(100%-2rem)] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-2xl border border-gray-100 dark:border-gray-700">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-lg font-bold" data-i18n="log_add">新增漁獲</h3>
                         <button onclick="closeLogModal()" class="text-gray-500 hover:text-gray-800 dark:hover:text-gray-200 text-xl leading-none" aria-label="Close">&times;</button>
@@ -124,12 +123,16 @@
             </div>
 
             <div id="log-detail-modal" class="fixed inset-0 z-[410] bg-black/60 p-4 hidden">
-                <div class="max-w-md mx-auto mt-8 bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-2xl border border-gray-100 dark:border-gray-700">
+                <div class="max-w-md w-[calc(100%-2rem)] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-2xl border border-gray-100 dark:border-gray-700">
                     <img id="log-detail-image" alt="detail" class="w-full h-64 object-cover bg-gray-100 dark:bg-gray-700">
                     <div class="p-4 space-y-2">
                         <p id="log-detail-species" class="text-xl font-bold"></p>
                         <p id="log-detail-metrics" class="text-sm text-gray-700 dark:text-gray-200"></p>
                         <p id="log-detail-date" class="text-xs text-gray-500"></p>
+                        <p id="log-detail-location" class="text-xs text-gray-500"></p>
+                        <div id="log-detail-map-wrap" class="hidden pt-1">
+                            <iframe id="log-detail-map" class="w-full h-36 rounded-lg border border-gray-200 dark:border-gray-700" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
                         <div class="flex gap-2 pt-2">
                             <button id="log-share-btn" type="button" class="flex-1 rounded-lg bg-primary hover:bg-blue-700 text-white px-4 py-2 font-bold" data-i18n="share_btn">分享戰利品</button>
                             <button type="button" onclick="closeLogDetailModal()" class="flex-1 rounded-lg border border-gray-300 dark:border-gray-600 px-4 py-2">Close</button>
@@ -213,6 +216,20 @@
                     <li>Do not litter or pollute the reservoirs.</li>
                 </ul>
             </section>
+            <section data-lang="zh" class="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-700 mb-4 pb-20">
+                <p class="text-sm leading-relaxed text-gray-700 dark:text-gray-200">
+                    以上內容純屬參考，並可能因為更新需時並未更新，請參閱
+                    <a class="text-primary underline" target="_blank" rel="noopener noreferrer" href="https://www.wsd.gov.hk/tc/customer-services/other-customer-services/fishing-in-reservoirs/application-for-fishing-licence/index.html">水務署網站</a>
+                    閱讀最新官方規則。
+                </p>
+            </section>
+            <section data-lang="en" class="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-700 mb-4 pb-20">
+                <p class="text-sm leading-relaxed text-gray-700 dark:text-gray-200">
+                    The above content is for reference only and may not reflect the latest updates. Please refer to the
+                    <a class="text-primary underline" target="_blank" rel="noopener noreferrer" href="https://www.wsd.gov.hk/en/customer-services/other-customer-services/fishing-in-reservoirs/application-for-fishing-licence/index.html">WSD website</a>
+                    for the latest official rules.
+                </p>
+            </section>
         </div>
 
         <div id="view-set" class="view-section h-full w-full absolute inset-0 bg-gray-50 dark:bg-gray-900 overflow-y-auto p-4 hidden z-[10]">
@@ -237,18 +254,111 @@
                 </button>
             </div>
 
-            <div class="mt-4 bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-700">
-                <h3 class="text-base font-bold mb-2">私隱條款 Privacy Policy</h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400"></p>
+            <div class="mt-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden divide-y divide-gray-100 dark:divide-gray-700">
+                <button onclick="openSubpage('privacy')" class="w-full p-4 text-left hover:bg-gray-50 dark:hover:bg-gray-700/60 transition">
+                    <span data-lang="zh">私隱條款</span>
+                    <span data-lang="en" class="hidden">Privacy Policy</span>
+                </button>
+                <button onclick="openSubpage('about')" class="w-full p-4 text-left hover:bg-gray-50 dark:hover:bg-gray-700/60 transition">
+                    <span data-lang="zh">關於開發者</span>
+                    <span data-lang="en" class="hidden">About Developer</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="view-privacy" class="view-section h-full w-full absolute inset-0 bg-gray-50 dark:bg-gray-900 overflow-y-auto p-4 hidden z-[20]">
+            <button onclick="switchTab('set')" class="mb-4 inline-flex items-center gap-2 text-sm px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800">
+                <span aria-hidden="true">←</span>
+                <span data-lang="zh">返回</span>
+                <span data-lang="en" class="hidden">Back</span>
+            </button>
+            <h2 class="text-2xl font-bold mb-4">
+                <span data-lang="zh">私隱政策</span>
+                <span data-lang="en" class="hidden">Privacy Policy</span>
+            </h2>
+
+            <div data-lang="zh" class="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-700 space-y-3 text-sm leading-relaxed text-gray-700 dark:text-gray-200">
+                <p><strong>生效日期：</strong>2026-02-18</p>
+                <p>釣魚易 FishingEasy Hong Kong（下稱「本應用程式」）尊重並保護所有使用者的個人私隱權。為了給您提供更準確、更有個性化的服務，本應用程式會按照本私隱權政策的規定使用和披露您的個人信息。</p>
+                <p><strong>1. 資料收集與使用（Data Collection &amp; Use）</strong></p>
+                <p>本應用程式採用「本地優先（Local-First）」架構。這意味著我們不會將您的個人資料上傳至任何私人伺服器。</p>
+                <p><strong>1.1 位置資訊（Location Data）</strong></p>
+                <p>用途：本應用程式使用您的地理位置（GPS）僅用於在裝置端實時計算您與最近水塘的距離。</p>
+                <p>儲存：您的位置資訊不會被記錄、追蹤或上傳至我們的伺服器。</p>
+                <p><strong>1.2 漁獲日誌與照片（Catch Logs &amp; Photos）</strong></p>
+                <p>用途：您在「日誌」功能中拍攝的照片及輸入的文字（如魚種、長度）。</p>
+                <p>儲存：所有資料均儲存於您手機的內部儲存空間（Local Storage）。若您刪除本應用程式或清除瀏覽器緩存，這些資料將會消失。</p>
+                <p><strong>2. 第三方服務與數據分享（Third-Party Services）</strong></p>
+                <p>本應用程式使用以下第三方服務，它們可能會收集您的裝置識別碼（Device ID）或使用 Cookie 以提供服務。</p>
+                <p><strong>2.1 Google AdMob（廣告服務）</strong></p>
+                <p>我們使用 Google AdMob 來顯示廣告。Google 可能會收集您的裝置資訊（如廣告 ID）及粗略位置，以提供個性化廣告。您可以透過裝置的設定來限制廣告追蹤。</p>
+                <p><strong>2.2 OpenStreetMap &amp; Leaflet（地圖服務）</strong></p>
+                <p>地圖圖塊（Map Tiles）由 OpenStreetMap 或相關供應商提供。加載地圖時，您的 IP 位址可能會被這些服務供應商記錄。</p>
+                <p><strong>3. 資料安全與刪除（Data Security &amp; Deletion）</strong></p>
+                <p><strong>3.1 資料安全</strong></p>
+                <p>由於資料儲存於您的裝置上，您的資料安全性取決於您手機的保安設定（如密碼鎖、生物認證）。</p>
+                <p><strong>3.2 資料刪除</strong></p>
+                <p>您可以隨時在應用程式的「設定」頁面中點擊「重置所有設定（Reset All）」，這將立即永久刪除本應用程式內儲存的所有日誌與設定。</p>
+                <p><strong>4. 免責聲明（Disclaimer）</strong></p>
+                <p><strong>4.1 地圖準確性</strong></p>
+                <p>本應用程式提供的地圖僅供參考。實際垂釣範圍及法規，請務必以現場告示牌及官方最新公佈為準。</p>
+                <p><strong>4.2 使用風險</strong></p>
+                <p>使用者須自行承擔進入戶外及水塘範圍之風險。開發者不對任何違規檢控、人身意外或財物損失負責。</p>
+                <p><strong>5. 政策變更（Changes to This Policy）</strong></p>
+                <p>我們可能會不時更新我們的私隱政策。建議您定期查看本頁面以獲取任何更改。</p>
+                <p><strong>6. 聯絡我們（Contact Us）</strong></p>
+                <p>如果您對本私隱政策有任何疑問，請透過以下方式聯絡我們：</p>
+                <p>Email: studioground2026@gmail.com</p>
             </div>
 
-            <div class="mt-4 bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-700">
-                <h3 class="text-base font-bold mb-2">關於開發者 About Developer</h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400"></p>
+            <div data-lang="en" class="hidden bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-700 space-y-3 text-sm leading-relaxed text-gray-700 dark:text-gray-200">
+                <p><strong>Effective Date:</strong> 2026-02-18</p>
+                <p>FishingEasy Hong Kong (hereinafter referred to as "this App") respects and protects the privacy of all users. In order to provide you with more accurate and personalized services, this App will use and disclose your personal information in accordance with this Privacy Policy.</p>
+                <p><strong>1. Data Collection &amp; Use</strong></p>
+                <p>This App adopts a "Local-First" architecture. This means we DO NOT upload your personal data to any private servers.</p>
+                <p><strong>1.1 Location Data</strong></p>
+                <p>Purpose: We use your geolocation (GPS) solely to calculate your distance to reservoirs in real-time on your device.</p>
+                <p>Storage: Your location data is NOT recorded, tracked, or uploaded to our servers.</p>
+                <p><strong>1.2 Catch Logs &amp; Photos</strong></p>
+                <p>Purpose: Photos taken and text entered (e.g., species, length) in the "Log" feature.</p>
+                <p>Storage: All data is stored locally on your device's internal storage. If you uninstall the App or clear the cache, this data will be lost.</p>
+                <p><strong>2. Third-Party Services</strong></p>
+                <p>This App uses the following third-party services, which may collect your Device ID or use Cookies to provide services.</p>
+                <p><strong>2.1 Google AdMob</strong></p>
+                <p>We use Google AdMob to display ads. Google may collect your device information (such as Advertising ID) and coarse location to provide personalized ads. You can limit ad tracking through your device settings.</p>
+                <p><strong>2.2 OpenStreetMap &amp; Leaflet</strong></p>
+                <p>Map tiles are provided by OpenStreetMap or related providers. When loading maps, your IP address may be logged by these service providers.</p>
+                <p><strong>3. Data Security &amp; Deletion</strong></p>
+                <p><strong>3.1 Data Security</strong></p>
+                <p>Since data is stored on your device, the security of your data depends on your phone's security settings (e.g., passcode, biometrics).</p>
+                <p><strong>3.2 Data Deletion</strong></p>
+                <p>You can tap "Reset All" in the "Settings" page at any time to immediately and permanently delete all logs and settings stored within this App.</p>
+                <p><strong>4. Disclaimer</strong></p>
+                <p><strong>4.1 Map Accuracy</strong></p>
+                <p>The map provided are for reference only. Please strictly follow the on-site signs and official announcements.</p>
+                <p><strong>4.2 Risks of Use</strong></p>
+                <p>Users assume all risks associated with entering outdoor and reservoir areas. The developer is not responsible for any prosecutions, personal accidents, or property losses.</p>
+                <p><strong>5. Changes to This Policy</strong></p>
+                <p>We may update our Privacy Policy from time to time. You are advised to review this page periodically for any changes.</p>
+                <p><strong>6. Contact Us</strong></p>
+                <p>If you have any questions about this Privacy Policy, please contact us at:</p>
+                <p>Email: studioground2026@gmail.com</p>
             </div>
+        </div>
 
-            <div class="mt-8 text-center text-xs text-gray-400">
-                v2.0.1 • Offline Capable<br>Data Source: WSD Hong Kong
+        <div id="view-about" class="view-section h-full w-full absolute inset-0 bg-gray-50 dark:bg-gray-900 overflow-y-auto p-4 hidden z-[20]">
+            <button onclick="switchTab('set')" class="mb-4 inline-flex items-center gap-2 text-sm px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800">
+                <span aria-hidden="true">←</span>
+                <span data-lang="zh">返回</span>
+                <span data-lang="en" class="hidden">Back</span>
+            </button>
+            <h2 class="text-2xl font-bold mb-4">
+                <span data-lang="zh">關於開發者</span>
+                <span data-lang="en" class="hidden">About Developer</span>
+            </h2>
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-700 space-y-2 text-sm text-gray-700 dark:text-gray-200">
+                <p data-lang="zh">（內容預留，可於此頁加入開發者介紹。）</p>
+                <p data-lang="en" class="hidden">(Content reserved. You can add developer information on this page.)</p>
             </div>
         </div>
     </main>
@@ -264,11 +374,17 @@
         </button>
         <button onclick="switchTab('log')" class="nav-btn flex flex-col items-center gap-1 w-full text-gray-400 hover:text-primary transition" id="nav-log">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
-            <span class="text-[10px] font-bold">日誌</span>
+            <span class="text-[10px] font-bold">
+                <span data-lang="zh">捕魚日誌</span>
+                <span data-lang="en" class="hidden">Fishing Log</span>
+            </span>
         </button>
         <button onclick="switchTab('rules')" class="nav-btn flex flex-col items-center gap-1 w-full text-gray-400 hover:text-primary transition" id="nav-rules">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
-            <span class="text-[10px] font-bold">牌照規則</span>
+            <span class="text-[10px] font-bold">
+                <span data-lang="zh">牌照規則</span>
+                <span data-lang="en" class="hidden">License Rules</span>
+            </span>
         </button>
         <button onclick="switchTab('set')" class="nav-btn flex flex-col items-center gap-1 w-full text-gray-400 hover:text-primary transition" id="nav-set">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
