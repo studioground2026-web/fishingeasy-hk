@@ -2,7 +2,7 @@
 <html lang="zh-HK">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>釣魚易 FishingEasy</title>
 
     <meta name="theme-color" content="#2563EB">
@@ -24,10 +24,17 @@
     </script>
 
     <style>
+        :root { --admob-banner-height: 50px; }
         body { padding-bottom: env(safe-area-inset-bottom); }
         #admob-banner-slot {
             padding-top: env(safe-area-inset-top);
-            height: calc(env(safe-area-inset-top) + 50px);
+            min-height: calc(env(safe-area-inset-top) + var(--admob-banner-height));
+            height: calc(env(safe-area-inset-top) + var(--admob-banner-height));
+        }
+        #admob-banner { height: var(--admob-banner-height); }
+        #bottom-nav {
+            padding-bottom: env(safe-area-inset-bottom);
+            min-height: calc(64px + env(safe-area-inset-bottom));
         }
         #view-map, #map { height: 100%; width: 100%; position: absolute; top: 0; left: 0; z-index: 1; }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
@@ -363,7 +370,7 @@
         </div>
     </main>
 
-    <nav class="h-16 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 flex justify-around items-center z-[100] pb-safe shadow-[0_-5px_10px_rgba(0,0,0,0.02)]">
+    <nav id="bottom-nav" class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 flex justify-around items-center z-[100] shadow-[0_-5px_10px_rgba(0,0,0,0.02)]">
         <button onclick="switchTab('map')" class="nav-btn active flex flex-col items-center gap-1 w-full text-gray-400 hover:text-primary transition" id="nav-map">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path><path d="M2 12h20"></path></svg>
             <span class="text-[10px] font-bold" data-i18n="tab_map">地圖</span>
@@ -383,7 +390,7 @@
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
             <span class="text-[10px] font-bold">
                 <span data-lang="zh">牌照規則</span>
-                <span data-lang="en" class="hidden">License Rules</span>
+                <span data-lang="en" class="hidden">License & Rules</span>
             </span>
         </button>
         <button onclick="switchTab('set')" class="nav-btn flex flex-col items-center gap-1 w-full text-gray-400 hover:text-primary transition" id="nav-set">
@@ -393,6 +400,12 @@
     </nav>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script>
+        function setAdMobBannerHeight(heightPx) {
+            const h = Math.max(0, Number(heightPx) || 50);
+            document.documentElement.style.setProperty("--admob-banner-height", `${h}px`);
+        }
+    </script>
     <script src="./app.js"></script>
 </body>
 </html>
