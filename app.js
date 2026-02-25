@@ -2,9 +2,9 @@
 
 const I18N = {
     zh: {
-        tab_map: "\u5730\u5716",
+        tab_map: "\u6c34\u5858\u5730\u5716",
         tab_dex: "\u6f01\u7372\u9650\u5236",
-        tab_prep: "\u724c\u7167",
+        tab_prep: "\u4e8b\u524d\u6e96\u5099",
         tab_rules: "\u898f\u5247",
         tab_set: "\u8a2d\u5b9a",
         locate_me: "\u5b9a\u4f4d\u6211\u7684\u4f4d\u7f6e",
@@ -28,7 +28,7 @@ const I18N = {
         chk_rod: "\u50c5\u5e36\u4e00\u7aff\u4e00\u7d72\uff08\u7981\u6b62\u7db2\u6355\uff09",
         settings_lang: "\u8a9e\u8a00",
         settings_dark: "\u6df1\u8272\u6a21\u5f0f",
-        settings_reset: "\u91cd\u8a2d\u6240\u6709\u8a2d\u5b9a",
+        settings_reset: "\u91cd\u8a2d\u6240\u6709\u8a2d\u5b9a\uff08\u6ce8\u610f\uff1a\u6240\u6709\u6355\u9b5a\u65e5\u8a8c\u7684\u76f8\u7247\u53ca\u8cc7\u6599\u90fd\u6703\u6d88\u5931\uff09",
         log_empty: "\u672a\u6709\u6f01\u7372\u65e5\u8a8c\uff0c\u6309 + \u65b0\u589e\u7b2c\u4e00\u7b46\u3002",
         log_add: "\u65b0\u589e\u6f01\u7372",
         log_save: "\u5132\u5b58",
@@ -39,9 +39,9 @@ const I18N = {
         share_unsupported: "\u6b64\u88dd\u7f6e\u4e0d\u652f\u63f4\u76f4\u63a5\u5206\u4eab\uff0c\u5c07\u81ea\u52d5\u4e0b\u8f09\u5716\u7247\u3002"
     },
     en: {
-        tab_map: "Map",
+        tab_map: "Reservoir Map",
         tab_dex: "Catch Limits",
-        tab_prep: "License",
+        tab_prep: "Preparation",
         tab_rules: "Rules",
         tab_set: "Settings",
         locate_me: "Locate Me",
@@ -65,7 +65,7 @@ const I18N = {
         chk_rod: "One Rod Only",
         settings_lang: "Language",
         settings_dark: "Dark Mode",
-        settings_reset: "Reset All",
+        settings_reset: "Reset all settings (Warning: all catch log photos and data will be deleted)",
         log_empty: "No catch logs yet. Tap + to add your first catch.",
         log_add: "Add Catch",
         log_save: "Save",
@@ -78,23 +78,23 @@ const I18N = {
 };
 
 const RESERVOIRS = [
-    { id: 1, name: { zh: "萬宜水庫", en: "High Island Res." }, lat: 22.3758, lng: 114.3537 },
-    { id: 2, name: { zh: "船灣淡水湖", en: "Plover Cove Res." }, lat: 22.4765, lng: 114.2587 },
-    { id: 3, name: { zh: "石壁水塘", en: "Shek Pik Res." }, lat: 22.2319, lng: 113.8985 },
-    { id: 4, name: { zh: "大欖涌水塘", en: "Tai Lam Chung Res." }, lat: 22.3820, lng: 114.0275 },
-    { id: 5, name: { zh: "城門水塘", en: "Shing Mun Res." }, lat: 22.3859, lng: 114.1479 },
-    { id: 6, name: { zh: "大潭篤水塘", en: "Tai Tam Tuk Res." }, lat: 22.2453, lng: 114.2184 },
-    { id: 7, name: { zh: "薄扶林水塘", en: "Pok Fu Lam Res." }, lat: 22.2653, lng: 114.1378 },
-    { id: 8, name: { zh: "香港仔上水塘", en: "Aberdeen Upper Res." }, lat: 22.2581, lng: 114.1650 },
-    { id: 9, name: { zh: "九龍水塘", en: "Kowloon Res." }, lat: 22.3544, lng: 114.1550 },
-    { id: 10, name: { zh: "大潭上水塘", en: "Tai Tam Upper Res." }, lat: 22.25244, lng: 114.20961 },
-    { id: 11, name: { zh: "大潭中水塘", en: "Tai Tam Intermediate Res." }, lat: 22.2466, lng: 114.21045 },
-    { id: 12, name: { zh: "大潭副水塘", en: "Tai Tam Byewash Res." }, lat: 22.24723, lng: 114.21497 },
-    { id: 13, name: { zh: "石梨貝水塘", en: "Shek Lei Pui Res." }, lat: 22.35352, lng: 114.14689 },
-    { id: 14, name: { zh: "下城門水塘", en: "Lower Shing Mun Res." }, lat: 22.36944, lng: 114.15972 },
-    { id: 15, name: { zh: "香港仔下水塘", en: "Aberdeen Lower Res." }, lat: 22.2541, lng: 114.1579 },
-    { id: 16, name: { zh: "九龍接收水塘", en: "Kowloon Reception Res." }, lat: 22.35111, lng: 114.14551 },
-    { id: 17, name: { zh: "九龍副水塘", en: "Kowloon Byewash Res." }, lat: 22.3524, lng: 114.1475 }
+    { id: 1, name: { zh: "萬宜水庫", en: "High Island Reservoir" }, lat: 22.3758, lng: 114.3537 },
+    { id: 2, name: { zh: "船灣淡水湖", en: "Plover Cove Reservoir" }, lat: 22.4765, lng: 114.2587 },
+    { id: 3, name: { zh: "石壁水塘", en: "Shek Pik Reservoir" }, lat: 22.2319, lng: 113.8985 },
+    { id: 4, name: { zh: "大欖涌水塘", en: "Tai Lam Chung Reservoir" }, lat: 22.3820, lng: 114.0275 },
+    { id: 5, name: { zh: "城門水塘", en: "Shing Mun Reservoir" }, lat: 22.3859, lng: 114.1479 },
+    { id: 6, name: { zh: "大潭篤水塘", en: "Tai Tam Tuk Reservoir" }, lat: 22.2453, lng: 114.2184 },
+    { id: 7, name: { zh: "薄扶林水塘", en: "Pok Fu Lam Reservoir" }, lat: 22.2653, lng: 114.1378 },
+    { id: 8, name: { zh: "香港仔上水塘", en: "Aberdeen Upper Reservoir" }, lat: 22.2581, lng: 114.1650 },
+    { id: 9, name: { zh: "九龍水塘", en: "Kowloon Reservoir" }, lat: 22.3544, lng: 114.1550 },
+    { id: 10, name: { zh: "大潭上水塘", en: "Tai Tam Upper Reservoir" }, lat: 22.25244, lng: 114.20961 },
+    { id: 11, name: { zh: "大潭中水塘", en: "Tai Tam Intermediate Reservoir" }, lat: 22.2466, lng: 114.21045 },
+    { id: 12, name: { zh: "大潭副水塘", en: "Tai Tam Byewash Reservoir" }, lat: 22.24723, lng: 114.21497 },
+    { id: 13, name: { zh: "石梨貝水塘", en: "Shek Lei Pui Reservoir" }, lat: 22.35352, lng: 114.14689 },
+    { id: 14, name: { zh: "下城門水塘", en: "Lower Shing Mun Reservoir" }, lat: 22.36944, lng: 114.15972 },
+    { id: 15, name: { zh: "香港仔下水塘", en: "Aberdeen Lower Reservoir" }, lat: 22.2541, lng: 114.1579 },
+    { id: 16, name: { zh: "九龍接收水塘", en: "Kowloon Reception Reservoir" }, lat: 22.35111, lng: 114.14551 },
+    { id: 17, name: { zh: "九龍副水塘", en: "Kowloon Byewash Reservoir" }, lat: 22.3524, lng: 114.1475 }
 ];
 
 const EXEMPT_FISH = [
@@ -112,6 +112,24 @@ const EXEMPT_FISH = [
     { zh: "琵琶魚", en: "Suckermouth Catfishes", sci: "Pterygoplichthys sp.", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/texas-cichlid.jpg" }
 ];
 
+const SHOP_ITEMS = [
+    {
+        name: { zh: "水塘魚餌新手套裝", en: "Starter Lure Kit" },
+        price: "HK$88",
+        image: "https://via.placeholder.com/640x360?text=Starter+Lure+Kit"
+    },
+    {
+        name: { zh: "水塘魚餌新手套裝 II", en: "Starter Lure Kit II" },
+        price: "HK$128",
+        image: "https://via.placeholder.com/640x360?text=Fishing+Shoes"
+    },
+    {
+        name: { zh: "水塘魚餌新手套裝 III", en: "Starter Lure Kit III" },
+        price: "HK$168",
+        image: "https://via.placeholder.com/640x360?text=Fishing+Pliers"
+    }
+];
+
 let state = {
     lang: localStorage.getItem("fe_lang") || "zh",
     darkMode: localStorage.getItem("fe_dark") === "true",
@@ -127,6 +145,7 @@ let currentDetailLogId = null;
 let pendingLogSource = "";
 let reservoirMarkers = [];
 let reservoirMarkerById = new Map();
+let nearestReservoir = null;
 
 document.addEventListener("DOMContentLoaded", () => {
     applyTheme();
@@ -135,11 +154,37 @@ document.addEventListener("DOMContentLoaded", () => {
     renderDex();
     renderLogs();
     renderChecklist();
+    renderShopItems();
     updateLicense();
     if (!state.agreed) document.getElementById("disclaimer-modal").classList.remove("hidden");
     switchTab("map");
     setTimeout(() => locateUser(), 200);
 });
+
+function renderShopItems() {
+    const carousel = document.getElementById("shop-carousel");
+    if (!carousel) return;
+    carousel.innerHTML = SHOP_ITEMS.map((item) => `
+        <article class="min-w-[250px] max-w-[260px] snap-start bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
+            <img src="${item.image}" alt="${escapeHtml(item.name[state.lang])}" class="w-full aspect-video object-cover bg-gray-100 dark:bg-gray-700">
+            <div class="p-4">
+                <h4 class="font-bold text-sm leading-snug mb-2">${escapeHtml(item.name[state.lang])}</h4>
+                <p class="text-primary font-bold mb-3">${escapeHtml(item.price)}</p>
+                <div class="w-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 text-sm font-bold py-2 px-3 rounded-lg text-center">
+                    Coming Soon
+                </div>
+            </div>
+        </article>
+    `).join("");
+}
+
+function buyViaWhatsApp(productName, price) {
+    const name = decodeURIComponent(productName || "");
+    const amount = decodeURIComponent(price || "");
+    const text = `你好！我想從 FishingEasy 購買【${name}】(${amount})，請問有現貨嗎？ / Hi! I'd like to buy [${name}] (${amount}) from FishingEasy. Is it in stock?`;
+    const phone = "YOUR_NUMBER";
+    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, "_blank");
+}
 
 function switchTab(tabId) {
     document.querySelectorAll(".view-section").forEach((el) => {
@@ -193,26 +238,45 @@ function getNavigationUrl(res) {
     return `https://www.google.com/maps/dir/?api=1&destination=${res.lat},${res.lng}`;
 }
 
-function createReservoirPopup(res) {
-    const navLabel = state.lang === "zh" ? "導航前往" : "Navigate";
-    return `
-        <div class="min-w-[180px]">
-            <div style="font-weight:700;margin-bottom:8px;">${res.name[state.lang]}</div>
-            <a href="${getNavigationUrl(res)}" target="_blank" rel="noopener noreferrer" style="display:inline-block;background:#2563EB;color:#fff;padding:6px 10px;border-radius:8px;text-decoration:none;font-size:12px;">${navLabel}</a>
-        </div>
-    `;
-}
-
 function renderReservoirMarkers() {
     if (!map) return;
     reservoirMarkers.forEach((m) => map.removeLayer(m));
     reservoirMarkers = [];
     reservoirMarkerById = new Map();
     RESERVOIRS.forEach((res) => {
-        const marker = L.marker([res.lat, res.lng]).addTo(map).bindPopup(createReservoirPopup(res));
+        const marker = L.marker([res.lat, res.lng]).addTo(map);
+        marker.on("click", () => {
+            nearestReservoir = res;
+            renderNearestReservoirCard(res);
+            const statusText = document.getElementById("status-text");
+            const statusDot = document.getElementById("status-dot");
+            if (statusText) statusText.innerText = `${I18N[state.lang].near_res} ${res.name[state.lang]}`;
+            if (statusDot) statusDot.className = "w-2 h-2 rounded-full bg-green-500";
+        });
         reservoirMarkers.push(marker);
         reservoirMarkerById.set(res.id, marker);
     });
+}
+
+function zoomInMap() {
+    if (map) map.zoomIn();
+}
+
+function zoomOutMap() {
+    if (map) map.zoomOut();
+}
+
+function renderNearestReservoirCard(res) {
+    const card = document.getElementById("nearest-reservoir-card");
+    const nameZh = document.getElementById("nearest-name-zh");
+    const nameEn = document.getElementById("nearest-name-en");
+    const navBtn = document.getElementById("nearest-nav-btn");
+    if (!card || !nameZh || !nameEn || !navBtn || !res) return;
+    nameZh.innerText = res.name.zh;
+    nameEn.innerText = res.name.en;
+    navBtn.href = getNavigationUrl(res);
+    navBtn.innerText = state.lang === "zh" ? "導航前往" : "Navigate";
+    card.classList.remove("hidden");
 }
 
 function locateUser() {
@@ -248,14 +312,15 @@ function checkProximity(latlng) {
     const statusText = document.getElementById("status-text");
     const statusDot = document.getElementById("status-dot");
     if (!nearest) return;
+    nearestReservoir = nearest;
     statusText.innerText = `${I18N[state.lang].near_res} ${nearest.name[state.lang]}`;
     statusDot.className = "w-2 h-2 rounded-full bg-green-500";
     const marker = reservoirMarkerById.get(nearest.id);
     if (marker) {
         const target = marker.getLatLng();
-        map.setView(target, map.getZoom(), { animate: true });
-        setTimeout(() => marker.openPopup(), 220);
+        map.setView(target, 14, { animate: true });
     }
+    renderNearestReservoirCard(nearest);
     if (navigator.vibrate) navigator.vibrate(200);
 }
 
@@ -695,16 +760,20 @@ async function generateShareImage(logId) {
 }
 
 function renderChecklist() {
-    const container = document.getElementById("rules-checklist-container");
-    if (!container) return;
+    const containers = [
+        document.getElementById("rules-checklist-container"),
+        document.getElementById("checklist-container")
+    ].filter(Boolean);
+    if (containers.length === 0) return;
     const items = ["chk_license", "chk_lead", "chk_rod"];
-    container.innerHTML = items.map((key) => `
+    const html = items.map((key) => `
         <label class="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg cursor-pointer select-none hover:bg-gray-100 dark:hover:bg-gray-600 transition">
             <input type="checkbox" onchange="toggleCheck('${key}')" ${state.checklist[key] ? "checked" : ""}
                 class="form-checkbox h-6 w-6 text-primary rounded border-gray-300 focus:ring-primary">
             <span class="ml-4 text-lg font-medium text-gray-700 dark:text-gray-200">${I18N[state.lang][key]}</span>
         </label>
     `).join("");
+    containers.forEach((container) => { container.innerHTML = html; });
 }
 
 function toggleCheck(key) {
@@ -762,7 +831,9 @@ function applyLang() {
     renderDex();
     renderLogs();
     renderChecklist();
+    renderShopItems();
     renderReservoirMarkers();
+    if (nearestReservoir) renderNearestReservoirCard(nearestReservoir);
     if (userMarker) checkProximity(userMarker.getLatLng());
     document.querySelectorAll("[data-lang]").forEach((el) => {
         el.classList.toggle("hidden", el.getAttribute("data-lang") !== state.lang);
