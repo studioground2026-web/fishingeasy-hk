@@ -101,32 +101,38 @@ const EXEMPT_FISH = [
     { zh: "大口黑鱸", en: "Largemouth Black Bass", sci: "Micropterus salmoides", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/red-swamp-crayfish.jpg" },
     { zh: "金筆", en: "Indonesian Snakehead", sci: "Channa micropeltes", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/tilapia.jpg" },
     { zh: "齊氏非鯽", en: "Redbelly Tilapia", sci: "Coptodon sp.", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/armoured-catfishes.jpg" },
-    { zh: "星點伴麗魚", en: "Jewelfish", sci: "Hemichromis sp.", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/common-pleco.jpg" },
-    { zh: "縱帶黑麗魚", en: "Malawi Golden Cichlid", sci: "Melanochromis sp.", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/sailfin-catfish.jpg" },
-    { zh: "莫桑比克口孵非鯽", en: "Mozambique Tilapia", sci: "Oreochromis sp.", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/suckermouth-catfish.jpg" },
-    { zh: "尼羅口孵非鯽", en: "Nile Tilapia", sci: "Oreochromis sp.", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/suckermouth-catfish2.jpg" },
-    { zh: "網紋獅頭（鵝頭）", en: "Redhead Cichlid", sci: "Vieja sp.", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/oscar.jpg" },
-    { zh: "九間", en: "Zebra Tilapia", sci: "Heterotilapia sp.", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/midas-cichlid.jpg" },
+    { zh: "星點伴麗魚", en: "Jewelfish", sci: "Hemichromis sp.", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/common-pleco.jpg", creditHtml: `<a href="http://creativecommons.org/licenses/by-sa/3.0/" title="Creative Commons Attribution-Share Alike 3.0">CC BY-SA 3.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=320453">Link</a>` },
+    { zh: "縱帶黑麗魚", en: "Malawi Golden Cichlid", sci: "Melanochromis sp.", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/sailfin-catfish.jpg", creditHtml: `By <a rel="nofollow" class="external text" href="https://www.flickr.com/people/butsky/">Vlad Butsky</a> from San Jose, CA, USA - <a rel="nofollow" class="external text" href="https://www.flickr.com/photos/butsky/312404299/">Flickr</a>, <a href="https://creativecommons.org/licenses/by/2.0" title="Creative Commons Attribution 2.0">CC BY 2.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=1528791">Link</a>` },
+    { zh: "莫桑比克口孵非鯽", en: "Mozambique Tilapia", sci: "Oreochromis sp.", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/suckermouth-catfish.jpg", creditHtml: `By <a href="//commons.wikimedia.org/wiki/User:Greg5030" title="User:Greg5030">Greg Hume</a> - <span class="int-own-work" lang="en">Own work</span>, <a href="https://creativecommons.org/licenses/by-sa/3.0" title="Creative Commons Attribution-Share Alike 3.0">CC BY-SA 3.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=14010645">Link</a>` },
+    { zh: "尼羅口孵非鯽", en: "Nile Tilapia", sci: "Oreochromis sp.", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/suckermouth-catfish2.jpg", creditHtml: `By <a href="//commons.wikimedia.org/w/index.php?title=User:Germano_Roberto_Sch%C3%BC%C3%BCr&amp;action=edit&amp;redlink=1" class="new" title="User:Germano Roberto Schüür (page does not exist)">Germano Roberto Schüür</a> - <span class="int-own-work" lang="en">Own work</span>, <a href="https://creativecommons.org/licenses/by-sa/4.0" title="Creative Commons Attribution-Share Alike 4.0">CC BY-SA 4.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=40488546">Link</a>` },
+    { zh: "網紋獅頭（鵝頭）", en: "Redhead Cichlid", sci: "Vieja sp.", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/oscar.jpg", creditHtml: `By H. Zell - Own work, CC BY-SA 3.0, <a href="https://commons.wikimedia.org/w/index.php?curid=82427997">Link</a>` },
+    { zh: "九間", en: "Zebra Tilapia", sci: "Heterotilapia sp.", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/midas-cichlid.jpg", creditHtml: `By <a href="//commons.wikimedia.org/wiki/User:Hectonichus" title="User:Hectonichus">Hectonichus</a> - <span class="int-own-work" lang="en">Own work</span>, <a href="https://creativecommons.org/licenses/by-sa/3.0" title="Creative Commons Attribution-Share Alike 3.0">CC BY-SA 3.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=41768974">Link</a>` },
     { zh: "珍珠石斑", en: "Jaguar Guapote", sci: "Parachromis sp.", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/jaguar-guapote.jpg" },
     { zh: "筍殼", en: "Marble Goby", sci: "Oxyeleotris marmorata", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/texas-cichlid.jpg" },
-    { zh: "琵琶魚", en: "Suckermouth Catfishes", sci: "Pterygoplichthys sp.", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/texas-cichlid.jpg" }
+    { zh: "琵琶魚", en: "Suckermouth Catfishes", sci: "Pterygoplichthys sp.", img: "https://www.wsd.gov.hk/filemanager/tc/content_1372/texas-cichlid.jpg", creditHtml: `By Raphaël Covain, <a href="https://creativecommons.org/licenses/by-sa/4.0" title="Creative Commons Attribution-Share Alike 4.0">CC BY-SA 4.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=63330109">Link</a>` }
 ];
+
+const EXEMPT_IMAGE_BASE = "https://filedn.eu/lkVyzti7eam4sGc0uW8bqHY/Studio_Ground/FishingEasyHK/Image/";
+EXEMPT_FISH.forEach((fish) => {
+    fish.imgBase = `${EXEMPT_IMAGE_BASE}${encodeURIComponent(fish.en)}`;
+    fish.img = `${fish.imgBase}.jpg`;
+});
 
 const SHOP_ITEMS = [
     {
         name: { zh: "水塘魚餌新手套裝", en: "Starter Lure Kit" },
         price: "HK$88",
-        image: "https://via.placeholder.com/640x360?text=Starter+Lure+Kit"
+        image: "https://filedn.eu/lkVyzti7eam4sGc0uW8bqHY/Studio_Ground/FishingEasyHK/Image/Store_Default.jpg"
     },
     {
         name: { zh: "水塘魚餌新手套裝 II", en: "Starter Lure Kit II" },
         price: "HK$128",
-        image: "https://via.placeholder.com/640x360?text=Fishing+Shoes"
+        image: "https://filedn.eu/lkVyzti7eam4sGc0uW8bqHY/Studio_Ground/FishingEasyHK/Image/Store_Default.jpg"
     },
     {
         name: { zh: "水塘魚餌新手套裝 III", en: "Starter Lure Kit III" },
         price: "HK$168",
-        image: "https://via.placeholder.com/640x360?text=Fishing+Pliers"
+        image: "https://filedn.eu/lkVyzti7eam4sGc0uW8bqHY/Studio_Ground/FishingEasyHK/Image/Store_Default.jpg"
     }
 ];
 
@@ -146,8 +152,13 @@ let pendingLogSource = "";
 let reservoirMarkers = [];
 let reservoirMarkerById = new Map();
 let nearestReservoir = null;
+const FE_DB_NAME = "FishingEasyDB";
+const FE_DB_VERSION = 1;
+const FE_DB_STORE_LOGS = "logs";
+let feDbPromise = null;
 
 document.addEventListener("DOMContentLoaded", () => {
+    initDB();
     applyTheme();
     applyLang();
     initMap();
@@ -328,11 +339,12 @@ function renderDex() {
     const t = I18N[state.lang];
     const cards = EXEMPT_FISH.map((fish) => `
         <article class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
-            <img src="${fish.img}" alt="${fish.en}" class="w-full h-44 object-cover bg-gray-100 dark:bg-gray-700">
+            <img src="${fish.img}" alt="${fish.en}" class="w-full h-44 object-cover bg-gray-100 dark:bg-gray-700" onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='${fish.imgBase}.png';}else if(this.dataset.fallback==='1'){this.dataset.fallback='2';this.src='${fish.imgBase}.jpeg';}else if(this.dataset.fallback==='2'){this.dataset.fallback='3';this.src='${fish.imgBase}.webp';}">
             <div class="p-4">
                 <h3 class="font-bold text-base">${fish.zh}</h3>
                 <p class="text-sm text-gray-600 dark:text-gray-300">${fish.en}</p>
                 <p class="text-xs text-gray-500 italic mt-1">${fish.sci}</p>
+                ${fish.creditHtml ? `<p class="text-[11px] leading-relaxed text-gray-500 dark:text-gray-400 mt-2 break-words">${fish.creditHtml}</p>` : ""}
             </div>
         </article>
     `).join("");
@@ -352,7 +364,6 @@ function renderDex() {
         </section>
         <section class="bg-amber-50 dark:bg-amber-900/20 rounded-xl p-4 border border-amber-300/60 dark:border-amber-500/40">
             <h3 class="font-bold text-lg mb-2">${t.exempt_title}</h3>
-            <p class="text-sm text-amber-900 dark:text-amber-100 mb-2">${t.exempt_family}</p>
             <p class="font-bold text-sm text-red-700 dark:text-red-300">${t.exempt_notice}</p>
             <a href="https://www.wsd.gov.hk/tc/customer-services/other-customer-services/fishing-in-reservoirs/fun-of-fishing/index.html" target="_blank" rel="noopener noreferrer" class="inline-block mt-2 text-xs underline text-primary">${t.source_label}</a>
         </section>
@@ -362,17 +373,51 @@ function renderDex() {
     `;
 }
 
-function getLogs() {
-    try {
-        const parsed = JSON.parse(localStorage.getItem("fe_logs") || "[]");
-        return Array.isArray(parsed) ? parsed : [];
-    } catch {
-        return [];
-    }
+function initDB() {
+    if (feDbPromise) return feDbPromise;
+    feDbPromise = new Promise((resolve, reject) => {
+        const req = indexedDB.open(FE_DB_NAME, FE_DB_VERSION);
+        req.onupgradeneeded = () => {
+            const db = req.result;
+            if (!db.objectStoreNames.contains(FE_DB_STORE_LOGS)) {
+                db.createObjectStore(FE_DB_STORE_LOGS, { keyPath: "id" });
+            }
+        };
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => reject(req.error);
+    });
+    return feDbPromise;
 }
 
-function setLogs(logs) {
-    localStorage.setItem("fe_logs", JSON.stringify(logs));
+async function addLog(log) {
+    const db = await initDB();
+    await new Promise((resolve, reject) => {
+        const tx = db.transaction(FE_DB_STORE_LOGS, "readwrite");
+        tx.objectStore(FE_DB_STORE_LOGS).put(log);
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => reject(tx.error);
+    });
+}
+
+async function getAllLogs() {
+    const db = await initDB();
+    const rows = await new Promise((resolve, reject) => {
+        const tx = db.transaction(FE_DB_STORE_LOGS, "readonly");
+        const req = tx.objectStore(FE_DB_STORE_LOGS).getAll();
+        req.onsuccess = () => resolve(req.result || []);
+        req.onerror = () => reject(req.error);
+    });
+    return rows.sort((a, b) => Number(b.id) - Number(a.id));
+}
+
+async function clearDB() {
+    const db = await initDB();
+    await new Promise((resolve, reject) => {
+        const tx = db.transaction(FE_DB_STORE_LOGS, "readwrite");
+        tx.objectStore(FE_DB_STORE_LOGS).clear();
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => reject(tx.error);
+    });
 }
 
 function escapeHtml(str) {
@@ -404,13 +449,13 @@ function parseLatLng(text) {
     return { lat, lng };
 }
 
-function renderLogs() {
+async function renderLogs() {
     const listEl = document.getElementById("log-list");
     const emptyEl = document.getElementById("log-empty");
     if (!listEl || !emptyEl) return;
     const delLabel = state.lang === "zh" ? "刪除" : "Delete";
-
-    const logs = getLogs().sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+    const shareLabel = state.lang === "zh" ? "分享" : "Share";
+    const logs = await getAllLogs();
     if (!logs.length) {
         emptyEl.classList.remove("hidden");
         listEl.innerHTML = "";
@@ -419,16 +464,17 @@ function renderLogs() {
 
     emptyEl.classList.add("hidden");
     listEl.innerHTML = logs.map((log) => {
-        const dateText = formatDateYMD(log.timestamp);
+        const dateText = log.date || formatDateYMD(log.id);
         return `
         <article onclick="openLogDetailModal('${log.id}')" class="bg-white dark:bg-gray-800 rounded-xl p-3 shadow-sm border border-gray-100 dark:border-gray-700 flex items-center gap-3 cursor-pointer">
-            <img src="${log.imageBase64}" alt="catch photo" class="w-16 h-16 rounded-lg object-cover bg-gray-100 dark:bg-gray-700 shrink-0">
+            <img src="${log.image}" alt="catch photo" class="w-16 h-16 rounded-lg object-cover bg-gray-100 dark:bg-gray-700 shrink-0">
             <div class="min-w-0 flex-1">
                 <p class="font-bold truncate">${escapeHtml(log.species || "-")}</p>
                 <p class="text-sm text-gray-600 dark:text-gray-300">${Number(log.length)} cm</p>
             </div>
             <div class="text-right shrink-0">
                 <p class="text-xs text-gray-500 mb-2">${dateText}</p>
+                <button onclick="event.stopPropagation(); generateShareImage('${log.id}')" class="text-xs px-2 py-1 rounded border border-blue-300 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 mr-1">${shareLabel}</button>
                 <button onclick="event.stopPropagation(); deleteLog('${log.id}')" class="text-xs px-2 py-1 rounded border border-red-300 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30">${delLabel}</button>
             </div>
         </article>
@@ -582,7 +628,7 @@ function compressImage(file) {
         reader.onload = () => {
             const img = new Image();
             img.onload = () => {
-                const maxWidth = 800;
+                const maxWidth = 1080;
                 let { width, height } = img;
                 if (width > maxWidth) {
                     height = Math.round((height * maxWidth) / width);
@@ -619,37 +665,37 @@ async function saveLog(event) {
     }
     if (!pendingLogImageBase64) return;
 
-    const chosenDate = dateEl.value || new Date().toISOString().split("T")[0];
-    const ts = new Date(`${chosenDate}T12:00:00`).toISOString();
     const entry = {
-        id: `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-        timestamp: ts,
-        imageBase64: pendingLogImageBase64,
+        id: Date.now(),
         species: speciesEl.value.trim(),
         length: Number(lengthEl.value),
         weight: Number(weightEl.value),
-        locationName: locationEl.value.trim()
+        locationName: locationEl.value.trim(),
+        date: dateEl.value || new Date().toISOString().slice(0, 10),
+        image: pendingLogImageBase64
     };
-
-    const logs = getLogs();
-    logs.push(entry);
-    setLogs(logs);
+    await addLog(entry);
     closeLogModal();
-    renderLogs();
+    await renderLogs();
 }
 
-function deleteLog(id) {
+async function deleteLog(id) {
     const t = I18N[state.lang];
     if (!confirm(t.log_delete_confirm)) return;
-    const logs = getLogs().filter((item) => item.id !== id);
-    setLogs(logs);
-    renderLogs();
-    if (currentDetailLogId === id) closeLogDetailModal();
+    const db = await initDB();
+    await new Promise((resolve, reject) => {
+        const tx = db.transaction(FE_DB_STORE_LOGS, "readwrite");
+        tx.objectStore(FE_DB_STORE_LOGS).delete(Number(id));
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => reject(tx.error);
+    });
+    await renderLogs();
+    if (String(currentDetailLogId) === String(id)) closeLogDetailModal();
 }
 
-function openLogDetailModal(id) {
-    const logs = getLogs();
-    const log = logs.find((item) => item.id === id);
+async function openLogDetailModal(id) {
+    const logs = await getAllLogs();
+    const log = logs.find((item) => String(item.id) === String(id));
     if (!log) return;
     currentDetailLogId = id;
 
@@ -664,10 +710,10 @@ function openLogDetailModal(id) {
     const shareBtn = document.getElementById("log-share-btn");
     if (!modal || !image || !species || !metrics || !date || !location || !mapWrap || !mapFrame || !shareBtn) return;
 
-    image.src = log.imageBase64;
+    image.src = log.image;
     species.innerText = log.species || "-";
     metrics.innerText = `${Number(log.length)} cm · ${Number(log.weight || 0)} kg`;
-    date.innerText = formatDateYMD(log.timestamp);
+    date.innerText = log.date || formatDateYMD(log.id);
     location.innerText = log.locationName ? log.locationName : "";
     const coords = parseLatLng(log.locationName);
     if (coords) {
@@ -696,17 +742,14 @@ function loadImage(src) {
     });
 }
 
-async function generateShareImage(logId) {
+async function shareTrophy(log) {
     const t = I18N[state.lang];
-    const log = getLogs().find((item) => item.id === logId);
-    if (!log) return;
-
     const canvas = document.getElementById("share-canvas");
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const img = await loadImage(log.imageBase64);
+    const img = await loadImage(log.image);
     const cw = canvas.width;
     const ch = canvas.height;
 
@@ -731,21 +774,17 @@ async function generateShareImage(logId) {
     ctx.font = "bold 48px sans-serif";
     ctx.fillText(`${Number(log.length)} cm · ${Number(log.weight || 0)} kg`, 56, ch - 118);
     ctx.font = "500 38px sans-serif";
-    ctx.fillText(formatDateYMD(log.timestamp), 56, ch - 58);
+    ctx.fillText(log.date || formatDateYMD(log.id), 56, ch - 58);
 
     ctx.textAlign = "right";
     ctx.font = "bold 32px sans-serif";
-    ctx.fillText("釣魚易 FishingEasy HK", cw - 40, ch - 24);
+    ctx.fillText("FishingEasy App", cw - 40, ch - 24);
 
     const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.92));
     if (!blob) return;
     const file = new File([blob], `fishingeasy_trophy_${Date.now()}.jpg`, { type: "image/jpeg" });
-    const shareText = state.lang === "zh"
-        ? `漁獲日誌：${log.species || "-"} (${Number(log.length)}cm)。 #釣魚易`
-        : `Catch Log: ${log.species || "-"} (${Number(log.length)}cm). #FishingEasyHK`;
-
     if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-        await navigator.share({ files: [file], title: "FishingEasyHK Share", text: shareText });
+        await navigator.share({ files: [file], title: "FishingEasy Share" });
         alert(t.share_success);
         return;
     }
@@ -757,6 +796,57 @@ async function generateShareImage(logId) {
     a.click();
     URL.revokeObjectURL(url);
     alert(t.share_unsupported);
+}
+
+async function generateShareImage(logId) {
+    const logs = await getAllLogs();
+    const log = logs.find((item) => String(item.id) === String(logId));
+    if (!log) return;
+    await shareTrophy(log);
+}
+
+function dataUrlToUint8Array(dataUrl) {
+    const base64 = (dataUrl.split(",")[1] || "");
+    const binary = atob(base64);
+    const out = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i += 1) out[i] = binary.charCodeAt(i);
+    return out;
+}
+
+async function exportToZip() {
+    if (typeof JSZip === "undefined") {
+        alert("JSZip not loaded");
+        return;
+    }
+    const logs = await getAllLogs();
+    if (!logs.length) {
+        alert(state.lang === "zh" ? "沒有可匯出的日誌資料" : "No log data to export.");
+        return;
+    }
+    const zip = new JSZip();
+    const imageFolder = zip.folder("images");
+    const meta = [];
+    logs.forEach((log) => {
+        const filename = `log_${log.id}.jpg`;
+        imageFolder.file(filename, dataUrlToUint8Array(log.image));
+        meta.push({
+            id: log.id,
+            species: log.species,
+            length: log.length,
+            weight: Number(log.weight || 0),
+            locationName: log.locationName || "",
+            date: log.date,
+            image: `images/${filename}`
+        });
+    });
+    zip.file("logs.json", JSON.stringify(meta, null, 2));
+    const blob = await zip.generateAsync({ type: "blob" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "FishingEasy_Backup.zip";
+    a.click();
+    URL.revokeObjectURL(url);
 }
 
 function renderChecklist() {
@@ -856,9 +946,12 @@ function acceptDisclaimer() {
     document.getElementById("disclaimer-modal").classList.add("hidden");
 }
 
-function resetApp() {
-    if (confirm("Reset all data?")) {
-        localStorage.clear();
-        location.reload();
-    }
+async function resetApp() {
+    const confirmText = state.lang === "zh"
+        ? "重設所有設定？注意：所有捕魚日誌的相片及資料都會消失。"
+        : "Reset all settings? All catch log photos and data will be deleted.";
+    if (!confirm(confirmText)) return;
+    await clearDB();
+    localStorage.clear();
+    location.reload();
 }
